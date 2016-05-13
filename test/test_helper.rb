@@ -60,7 +60,41 @@ class Minitest::Test
     end
   end
 
+  # Gem::Specification starts with Bundler's gems, has post_reset_hook
+  # from Bundler, and attempts to populate itself from
+  # Gem.loaded_specs after a reset hence setting +all+ to non-nil
+  # empty array.
+  #
+  # Without this, some specs are Bundler::StubSpecification, and
+  # cannot be dumped:
+  #
+  #     1) Error:
+  # IsApiRequestTest#test_method: test upload via api :
+  # TypeError: can't dump hash with default proc
+  #     ruby-2.2.0-p0/lib/ruby/2.2.0/rubygems/indexer.rb:142:in `dump'
+  #     ruby-2.2.0-p0/lib/ruby/2.2.0/rubygems/indexer.rb:142:in `block (2 levels) in build_marshal_gemspecs'
+  #     ruby-2.2.0-p0/lib/ruby/2.2.0/rubygems/specification.rb:895:in `block in each'
+  #     ruby-2.2.0-p0/lib/ruby/2.2.0/rubygems/specification.rb:894:in `each'
+  #     ruby-2.2.0-p0/lib/ruby/2.2.0/rubygems/indexer.rb:137:in `block in build_marshal_gemspecs'
+  #     ruby-2.2.0-p0/lib/ruby/2.2.0/rubygems.rb:907:in `time'
+  #     ruby-2.2.0-p0/lib/ruby/2.2.0/rubygems/indexer.rb:136:in `build_marshal_gemspecs'
+  #     ruby-2.2.0-p0/lib/ruby/2.2.0/rubygems/indexer.rb:119:in `build_indicies'
+  #     ruby-2.2.0-p0/lib/ruby/2.2.0/rubygems/indexer.rb:310:in `generate_index'
+  #     geminabox/test/requests/is_api_request_test.rb:12:in `block in setup'
+  #     geminabox/test/test_helper.rb:58:in `block (2 levels) in silence'
+  #     geminabox/test/test_helper.rb:50:in `silence_stream'
+  #     geminabox/test/test_helper.rb:57:in `block in silence'
+  #     geminabox/test/test_helper.rb:50:in `silence_stream'
+  #     geminabox/test/test_helper.rb:56:in `silence'
+  #     geminabox/test/requests/is_api_request_test.rb:11:in `setup'
+  def clear_gem_specification!
+    Gem.post_reset_hooks.clear
+    Gem::Specification.reset
+    Gem::Specification.all = []
+  end
+
   def inject_gems(&block)
+    clear_gem_specification!
     silence do
       yield GemFactory.new(File.join(Geminabox.data, "gems"))
       Gem::Indexer.new(Geminabox.data).generate_index
