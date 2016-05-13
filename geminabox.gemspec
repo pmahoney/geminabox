@@ -22,4 +22,10 @@ Gem::Specification.new do |s|
   s.add_dependency('httpclient', [">= 2.2.7"])
   s.add_dependency('nesty')
   s.add_dependency('faraday')
+
+  s.add_development_dependency 'capybara-mechanize'
+  s.add_development_dependency 'minitest'
+  s.add_development_dependency 'rack-test'
+  s.add_development_dependency 'rake'
+  s.add_development_dependency 'webmock'
 end
