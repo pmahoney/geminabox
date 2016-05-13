@@ -18,10 +18,10 @@ Gem::Specification.new do |s|
   s.require_paths     = ['lib']
 
   s.add_dependency 'sinatra'    , '>= 1.2.7'
-  s.add_dependency 'builder'
+  s.add_dependency 'builder'    , '~> 3.2.2'
   s.add_dependency 'httpclient' , '>= 2.2.7'
-  s.add_dependency 'nesty'
-  s.add_dependency 'faraday'
+  s.add_dependency 'nesty'      , '~> 1.0.2'
+  s.add_dependency 'faraday'    , '~> 0.9.2'
 
   s.add_development_dependency 'capybara-mechanize' , '~> 1.5.0'
   s.add_development_dependency 'minitest'           , '~> 5.8.4'

@@ -2,10 +2,10 @@ PATH
   remote: .
   specs:
     geminabox (0.13.1)
-      builder
-      faraday
+      builder (~> 3.2.2)
+      faraday (~> 0.9.2)
       httpclient (>= 2.2.7)
-      nesty
+      nesty (~> 1.0.2)
       sinatra (>= 1.2.7)
 
 GEM
