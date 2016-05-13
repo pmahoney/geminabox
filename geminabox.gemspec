@@ -23,9 +23,9 @@ Gem::Specification.new do |s|
   s.add_dependency('nesty')
   s.add_dependency('faraday')
 
-  s.add_development_dependency 'capybara-mechanize'
-  s.add_development_dependency 'minitest'
-  s.add_development_dependency 'rack-test'
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'webmock'
+  s.add_development_dependency 'capybara-mechanize' , '~> 1.5.0'
+  s.add_development_dependency 'minitest'           , '~> 5.8.4'
+  s.add_development_dependency 'rack-test'          , '~> 0.6.3'
+  s.add_development_dependency 'rake'               , '~> 11.1.2'
+  s.add_development_dependency 'webmock'            , '~> 2.0.1'
 end
